@@ -14,7 +14,7 @@ public class Main {
              Channel channel = connection.createChannel()) {
             channel.queueDeclare(FIRST_QUEUE_NAME, false, false, false, null);
             while (true) {
-                String message = String.valueOf(Math.random() * 40);
+                String message = String.valueOf(Math.random() * -20);
                 channel.basicPublish("", FIRST_QUEUE_NAME, null, message.getBytes());
                 System.out.println("Sent: '" + message + "'");
                 TimeUnit.SECONDS.sleep(1);
