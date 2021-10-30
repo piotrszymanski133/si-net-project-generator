@@ -21,6 +21,9 @@ jobs:
       packages: write
 
     steps:
+      - name: Set current date as env variable
+        run: echo "NOW::$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+        
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -42,5 +45,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ $NOW }}
           labels: ${{ steps.meta.outputs.labels }}
