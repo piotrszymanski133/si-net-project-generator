@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost("rabbitmq");
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.queueDeclare(FIRST_QUEUE_NAME, false, false, false, null);
@@ -21,6 +21,7 @@ public class Main {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            throw new RuntimeException("An error occurred.");
         }
     }
 

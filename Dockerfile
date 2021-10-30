@@ -1,9 +1,9 @@
-FROM maven:3.5-jdk-8 AS build  
+FROM maven:3.8.3-openjdk-17 AS build  
 COPY src /usr/src/app/src  
 COPY pom.xml /usr/src/app  
-RUN mvn -f /usr/src/app/pom.xml clean package
+RUN mvn -f /usr/src/app/pom.xml clean compile assembly:single
 
-FROM gcr.io/distroless/java  
-COPY --from=build /usr/src/app/target/generator-1.0-SNAPSHOT.jar /usr/app/generator-1.0-SNAPSHOT.jar
+FROM openjdk:15
+COPY --from=build /usr/src/app/target/generator-1.0-SNAPSHOT-jar-with-dependencies.jar /usr/app/generator-1.0-SNAPSHOT.jar
 EXPOSE 8080  
-ENTRYPOINT ["java","-jar","/usr/app/helloworld-1.0.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","/usr/app/generator-1.0-SNAPSHOT.jar"]
