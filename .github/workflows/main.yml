@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%dt%H-%M-%S')"
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
         
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -46,5 +46,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ latest }}
+          tags: ${{ steps.date.outputs.date }}
           labels: ${{ steps.meta.outputs.labels }}
