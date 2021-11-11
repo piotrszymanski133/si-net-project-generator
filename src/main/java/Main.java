@@ -41,8 +41,10 @@ public class Main {
             for (int i = 0; i < NUMBER_OF_SENSORS_PER_QUEUE; i++) {
                 Sensor sensor = new Sensor(FOURTH_QUEUE_NAME, FOURTH_QUEUE_DELAY, channel, i+1);
                 sensor.start();
+                if(i == NUMBER_OF_SENSORS_PER_QUEUE-1){
+                    sensor.join();
+                }
             }
-            TimeUnit.SECONDS.sleep(10);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("An error occurred.");
