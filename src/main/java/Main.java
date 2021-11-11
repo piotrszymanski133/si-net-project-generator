@@ -10,10 +10,10 @@ public class Main {
     private final static String THIRD_QUEUE_NAME = "wind";
     private final static String FOURTH_QUEUE_NAME = "pressure";
 
-    private final static int FIRST_QUEUE_DELAY = 3;
-    private final static int SECOND_QUEUE_DELAY = 4;
-    private final static int THIRD_QUEUE_DELAY = 4;
-    private final static int FOURTH_QUEUE_DELAY = 6;
+    private final static int FIRST_QUEUE_DELAY = Integer.parseInt(System.getenv("FIRST_QUEUE_DELAY"));
+    private final static int SECOND_QUEUE_DELAY = Integer.parseInt(System.getenv("SECOND_QUEUE_DELAY"));
+    private final static int THIRD_QUEUE_DELAY = Integer.parseInt(System.getenv("THIRD_QUEUE_DELAY"));
+    private final static int FOURTH_QUEUE_DELAY = Integer.parseInt(System.getenv("FOURTH_QUEUE_DELAY"));
 
     private final static int NUMBER_OF_SENSORS_PER_QUEUE = 10;
 
