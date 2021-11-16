@@ -15,6 +15,15 @@ public class Main {
     private final static int THIRD_QUEUE_DELAY = Integer.parseInt(System.getenv("THIRD_QUEUE_DELAY"));
     private final static int FOURTH_QUEUE_DELAY = Integer.parseInt(System.getenv("FOURTH_QUEUE_DELAY"));
 
+    private final static int FIRST_QUEUE_RANGE_FROM = Integer.parseInt(System.getenv("FIRST_QUEUE_RANGE_FROM"));
+    private final static int FIRST_QUEUE_RANGE_TO = Integer.parseInt(System.getenv("FIRST_QUEUE_RANGE_TO"));
+    private final static int SECOND_QUEUE_RANGE_FROM = Integer.parseInt(System.getenv("SECOND_QUEUE_RANGE_FROM"));
+    private final static int SECOND_QUEUE_RANGE_TO = Integer.parseInt(System.getenv("SECOND_QUEUE_RANGE_TO"));
+    private final static int THIRD_QUEUE_RANGE_FROM = Integer.parseInt(System.getenv("THIRD_QUEUE_RANGE_FROM"));
+    private final static int THIRD_QUEUE_RANGE_TO = Integer.parseInt(System.getenv("THIRD_QUEUE_RANGE_TO"));
+    private final static int FOURTH_QUEUE_RANGE_FROM = Integer.parseInt(System.getenv("FOURTH_QUEUE_RANGE_FROM"));
+    private final static int FOURTH_QUEUE_RANGE_TO = Integer.parseInt(System.getenv("FOURTH_QUEUE_RANGE_TO"));
+
     private final static int NUMBER_OF_SENSORS_PER_QUEUE = 10;
 
     public static void main(String[] args) {
@@ -24,22 +33,22 @@ public class Main {
              Channel channel = connection.createChannel()) {
             channel.queueDeclare(FIRST_QUEUE_NAME, false, false, false, null);
             for (int i = 0; i < NUMBER_OF_SENSORS_PER_QUEUE; i++) {
-                Sensor sensor = new Sensor(FIRST_QUEUE_NAME, FIRST_QUEUE_DELAY, channel, i+1);
+                Sensor sensor = new Sensor(FIRST_QUEUE_NAME, FIRST_QUEUE_DELAY, channel, i+1, FIRST_QUEUE_RANGE_FROM, FIRST_QUEUE_RANGE_TO);
                 sensor.start();
             }
             channel.queueDeclare(SECOND_QUEUE_NAME, false, false, false, null);
             for (int i = 0; i < NUMBER_OF_SENSORS_PER_QUEUE; i++) {
-                Sensor sensor = new Sensor(SECOND_QUEUE_NAME, SECOND_QUEUE_DELAY, channel, i+1);
+                Sensor sensor = new Sensor(SECOND_QUEUE_NAME, SECOND_QUEUE_DELAY, channel, i+1, SECOND_QUEUE_RANGE_FROM, SECOND_QUEUE_RANGE_TO);
                 sensor.start();
             }
             channel.queueDeclare(THIRD_QUEUE_NAME, false, false, false, null);
             for (int i = 0; i < NUMBER_OF_SENSORS_PER_QUEUE; i++) {
-                Sensor sensor = new Sensor(THIRD_QUEUE_NAME, THIRD_QUEUE_DELAY, channel, i+1);
+                Sensor sensor = new Sensor(THIRD_QUEUE_NAME, THIRD_QUEUE_DELAY, channel, i+1, THIRD_QUEUE_RANGE_FROM, THIRD_QUEUE_RANGE_TO);
                 sensor.start();
             }
             channel.queueDeclare(FOURTH_QUEUE_NAME, false, false, false, null);
             for (int i = 0; i < NUMBER_OF_SENSORS_PER_QUEUE; i++) {
-                Sensor sensor = new Sensor(FOURTH_QUEUE_NAME, FOURTH_QUEUE_DELAY, channel, i+1);
+                Sensor sensor = new Sensor(FOURTH_QUEUE_NAME, FOURTH_QUEUE_DELAY, channel, i+1, FOURTH_QUEUE_RANGE_FROM, FOURTH_QUEUE_RANGE_TO);
                 sensor.start();
                 if(i == NUMBER_OF_SENSORS_PER_QUEUE-1){
                     sensor.join();

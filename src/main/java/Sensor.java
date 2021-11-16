@@ -15,27 +15,24 @@ public class Sensor extends Thread{
 
     private int id;
 
-    public Sensor(String queueName, int delay, Channel channel, int id){
+    private int rangeFrom;
+
+    private int rangeTo;
+
+    public Sensor(String queueName, int delay, Channel channel, int id, int rangeFrom, int rangeTo){
         this.queueName = queueName;
         this.delay = delay;
         this.channel = channel;
         this.id = id;
+        this.rangeFrom = rangeFrom;
+        this.rangeTo = rangeTo;
     }
 
     @Override
     public void run() {
         try {
             while (true) {
-                double value = 0;
-                if(queueName.equals("temperature")){
-                    value = Math.random() * 40;
-                } else if (queueName.equals("humidity")) {
-                    value = Math.random() * 100;
-                } else if (queueName.equals("wind")) {
-                    value = Math.random() * 50;
-                } else if (queueName.equals("pressure")) {
-                    value = Math.random() * 2;
-                }
+                double value = Math.random() * (rangeTo - rangeFrom) + rangeFrom;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 JSONObject jo = new JSONObject();
                 jo.put("id", queueName + id);
