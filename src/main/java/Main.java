@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("rabbitmq");
+        factory.setHost("rabbitmq-SI-175557");
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.queueDeclare(TEMPERATURE_QUEUE_NAME, false, false, false, null);
