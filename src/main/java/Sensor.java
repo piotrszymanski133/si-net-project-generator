@@ -7,32 +7,34 @@ import java.util.concurrent.TimeUnit;
 
 public class Sensor extends Thread{
 
-    private String queueName;
+    private final String queueName;
 
-    private int delay;
+    private final Channel channel;
 
-    private Channel channel;
+    private final String delayEnv;
 
-    private int id;
+    private final String rangeStartEnv;
 
-    private int rangeFrom;
+    private final String rangeEndEnv;
 
-    private int rangeTo;
+    private final int id;
 
-    public Sensor(String queueName, int delay, Channel channel, int id, int rangeFrom, int rangeTo){
+
+    public Sensor(String queueName, String type, Channel channel, int id){
         this.queueName = queueName;
-        this.delay = delay;
         this.channel = channel;
         this.id = id;
-        this.rangeFrom = rangeFrom;
-        this.rangeTo = rangeTo;
+        this.delayEnv = type + "QUEUE_DELAY";
+        this.rangeStartEnv = type + "QUEUE_RANGE_FROM";
+        this.rangeEndEnv = type + "QUEUE_RANGE_TO";
+
     }
 
     @Override
     public void run() {
         try {
             while (true) {
-                double value = Math.random() * (rangeTo - rangeFrom) + rangeFrom;
+                double value = Math.random() * (getValueFromEnv(rangeEndEnv) - getValueFromEnv(rangeStartEnv)) + getValueFromEnv(rangeStartEnv);
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 JSONObject jo = new JSONObject();
                 jo.put("id", queueName + id);
@@ -42,8 +44,12 @@ public class Sensor extends Thread{
 
                 channel.basicPublish("", queueName, null, jo.toString().getBytes());
                 System.out.println(queueName + " sensor nr." + id + " sent: '" + jo.toString() + "'");
-                TimeUnit.SECONDS.sleep(delay);
+                TimeUnit.SECONDS.sleep(getValueFromEnv(delayEnv));
             }
         } catch (Exception e){}
+    }
+
+    public int getValueFromEnv(String env) {
+        return  Integer.parseInt(System.getenv(env));
     }
 }
