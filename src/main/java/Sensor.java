@@ -24,9 +24,9 @@ public class Sensor extends Thread{
         this.queueName = queueName;
         this.channel = channel;
         this.id = id;
-        this.delayEnv = type + "QUEUE_DELAY";
-        this.rangeStartEnv = type + "QUEUE_RANGE_FROM";
-        this.rangeEndEnv = type + "QUEUE_RANGE_TO";
+        this.delayEnv = type + "_QUEUE_DELAY";
+        this.rangeStartEnv = type + "_QUEUE_RANGE_FROM";
+        this.rangeEndEnv = type + "_QUEUE_RANGE_TO";
 
     }
 
